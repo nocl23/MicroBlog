@@ -45,8 +45,10 @@ while ($data = $stmt->fetch()) {
 	<blockquote>
 		<?= $data['contenu'] ?>
     <div class="col-sm-2">
-        <?php echo "<a href='index.php?id=" .$data['id']. "'><button type='button' class='btn btn-success'>Modifier</button></a>" ?>
-
+        <?php echo "<a href='index.php?id=" .$data['id']. "'><button type='button' class='btn btn-warning'>Modifier</button></a>" ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo "<a href='suppression.php?id=" .$data['id']. "'><button type='button' class='btn btn-danger'>Supprimer</button></a>" ?>
     </div>
 	</blockquote>
 	<?php
