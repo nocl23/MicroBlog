@@ -5,7 +5,7 @@ include('includes/haut.inc.php');
 
 if(isset($_GET['id']) && !empty($_GET['id'])){
   $id = $_GET['id'];
-  $sql = 'SELECT contenu from messages where id='.$id.'';
+  $sql = 'SELECT * from messages where id='.$id.'';
   $requete = $pdo->query($sql);
   if ($data = $requete->fetch()) {
      $message =  $data['contenu'];
@@ -50,6 +50,9 @@ while ($data = $stmt->fetch()) {
     <div class="col-sm-2">
         <?php echo "<a href='suppression.php?id=" .$data['id']. "'><button type='button' class='btn btn-danger'>Supprimer</button></a>" ?>
     </div>
+    <div class="col-sm-12">
+        <?= "Ajouté le ".$data['date'] ?>
+      </div>
 	</blockquote>
 	<?php
 }
