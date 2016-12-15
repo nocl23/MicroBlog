@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -50,7 +51,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#">Connexion</a>
+                        <a href="connexion.php">Connexion</a>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
