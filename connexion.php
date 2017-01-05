@@ -2,8 +2,31 @@
 include('includes/connexion.inc.php');
 include('includes/haut.inc.php');
 
+if(isset($_POST['pseudo'])){
+    $password = md5($_POST['password']);
+    $pseudo=$_POST['pseudo'];
+    $connecte = false;
+    $query = "SELECT * from users where pseudo='$pseudo' and password='$password'";
+    $prep = $pdo->prepare($query);
+    $prep->execute();
 
-  ?>
+    if ($prep->fetch())
+    {
+      $connecte=true;
+      $sid = $pseudo.time();
+      setcookie('sid',$sid,time() + 365);
+      $update = "UPDATE users SET sid='$sid' where pseudo='$pseudo'";
+      $prepare = $pdo->prepare($update);
+      $prepare->execute();
+      header("Location: index.php");
+    }
+    else
+    {
+        header("Location: connexion.php");
+    }
+
+}
+?>
 
 <form method="post" action="connexion.php">
   <div class="row">
@@ -20,34 +43,3 @@ include('includes/haut.inc.php');
 </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
-
-<?php
-
-if(isset($_POST['pseudo'])){
-    $password = md5($_POST['password']);
-    $pseudo=$_POST['pseudo'];
-    $connecte = false;
-    $query = "SELECT * from users where pseudo='$pseudo' and password='$password'";
-    $prep = $pdo->prepare($query);
-    $prep->execute();
-
-    if ($prep->fetch())
-    {
-      $connecte=true;
-      $sid = $pseudo.time();
-      setcookie('sid',$sid,time() + 365*24*3600, null, null, false, true);
-      $update = "UPDATE users SET sid='$sid' where pseudo='$pseudo'";
-      $prepare = $pdo->prepare($update);
-      $prepare->execute();
-
-    }
-    else
-    {
-        header("Location : connexion.php");
-    }
-
-}
-
-
-
- ?>
