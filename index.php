@@ -41,8 +41,9 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 $index = 0;
 $mpp = 4;
 if(isset($_GET['p']) && !empty($_GET['p'])){
-  $index = $_GET['p'];
-  $index = ($index - 1)* $mpp;
+  $page = $_GET['p'];
+
+  $index = ($page - 1)* $mpp;
 }
 $query = 'SELECT * FROM messages LIMIT '.$index.','.$mpp.'';
 echo $query;
@@ -92,12 +93,22 @@ $nombre_message = $data['total_messages'];
 
 $nb_pages = ($nombre_message) ? ceil($nombre_message/$mpp) : 1;
 
+if ($page > 1){
+  $previous = $page - 1;
+}else{
+  $previous = 1;
+}
+if($page < $nb_pages){
+  $next = $page + 1;
+}else{
+  $next = $page;
+}
 
 ?>
 <nav aria-label="Page navigation">
   <ul class="pagination">
     <li>
-      <a href="#" aria-label="Previous">
+      <a <?php echo "href='index.php?p=$previous'" ?> aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -109,7 +120,7 @@ $nb_pages = ($nombre_message) ? ceil($nombre_message/$mpp) : 1;
      ?>
 
     <li>
-      <a href="#" aria-label="Next">
+      <a <?php echo "href='index.php?p=$next'" ?> aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
