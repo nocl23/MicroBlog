@@ -2,20 +2,20 @@
 include('includes/connexion.inc.php');
 include('includes/haut.inc.php');
 
-
+$message= "";
+$id ="";
+// affichage Modification d'un message
 if(isset($_GET['id']) && !empty($_GET['id'])){
-  $id = $_GET['id'];
 
+  $id = $_GET['id'];
     $sql = 'SELECT * from messages where id='.$id.'';
     $requete = $pdo->query($sql);
     if ($data = $requete->fetch()) {
       $message =  $data['contenu'];
-
     }else{
       header("Location: index.php");
     }
 }
-
 
 ?>
 <div class="row">
@@ -36,34 +36,37 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 </div>
 
 <?php
-
 // Pagination
 $index = 0;
 $mpp = 4;
+
 if(isset($_GET['p']) && !empty($_GET['p'])){
   $page = $_GET['p'];
-
   $index = ($page - 1)* $mpp;
 }
-$query = 'SELECT * FROM messages LIMIT '.$index.','.$mpp.'';
-echo $query;
-//$query = 'SELECT * FROM messages';
-$stmt = $pdo->query($query);
+//$query = 'SELECT * FROM messages LIMIT '.$index.','.$mpp.'';
 
+//$query = 'SELECT * FROM messages';
+$query = 'SELECT * , messages.id as message_id FROM messages INNER JOIN users ON messages.user_id = users.id LIMIT '.$index.','.$mpp.'';
+$stmt = $pdo->prepare($query);
+$stmt->execute();
 while ($data = $stmt->fetch()) {
   if($connecte == true){
   	?>
   	<blockquote>
   		<?= $data['contenu'] ?>
       <div class="col-sm-2">
-          <?php echo "<a href='index.php?id=" .$data['id']."&p=".$page."'><button type='button' class='btn btn-warning'>Modifier</button></a>" ?>
+          <?php echo "<a href='index.php?id=" .$data['message_id']."&p=".$page."'><button type='button' class='btn btn-warning'>Modifier</button></a>" ?>
       </div>
       <div class="col-sm-2">
-          <?php echo "<a href='suppression.php?id=" .$data['id']."&p=".$page."'><button type='button' class='btn btn-danger'>Supprimer</button></a>" ?>
+          <?php echo "<a href='suppression.php?id=" .$data['message_id']."&p=".$page."'><button type='button' class='btn btn-danger'>Supprimer</button></a>" ?>
       </div>
       <div class="col-sm-12">
           <?= "Ajouté le ".$data['date'] ?>
         </div>
+        <div class="col-sm-12">
+            <?= "Ajouté par ".$data['pseudo'] ?>
+          </div>
   	</blockquote>
     <?php
   }else{
@@ -71,28 +74,28 @@ while ($data = $stmt->fetch()) {
     <blockquote>
       <?= $data['contenu'] ?>
       <div class="col-sm-2">
-          <?php echo "<a href='index.php?id=" .$data['id']. "'></a>" ?>
+          <?php echo "<a href='index.php?id=" .$data['message_id']. "'></a>" ?>
       </div>
       <div class="col-sm-2">
-          <?php echo "<a href='suppression.php?id=" .$data['id']. "'></a>" ?>
+          <?php echo "<a href='suppression.php?id=" .$data['message_id']. "'></a>" ?>
       </div>
       <div class="col-sm-12">
           <?= "Ajouté le ".$data['date'] ?>
         </div>
+        <div class="col-sm-12">
+            <?= "Ajouté par ".$data['pseudo'] ?>
+          </div>
     </blockquote>
     <?php
   }
 }
 ?>
 <?php
-
 $requete = 'SELECT COUNT(*) as total_messages FROM messages';
 $prep = $pdo->query($requete);
 $data = $prep->fetch();
 $nombre_message = $data['total_messages'];
-
 $nb_pages = ($nombre_message) ? ceil($nombre_message/$mpp) : 1;
-
 if ($page > 1){
   $previous = $page - 1;
 }else{
@@ -103,7 +106,6 @@ if($page < $nb_pages){
 }else{
   $next = $page;
 }
-
 ?>
 <nav aria-label="Page navigation">
   <ul class="pagination">
