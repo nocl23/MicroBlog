@@ -17,6 +17,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
     }
 }
 
+if($connecte){
 ?>
 <div class="row">
     <form method="post" action="message.php">
@@ -34,8 +35,8 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
         </div>
     </form>
 </div>
-
 <?php
+}
 // Pagination
 $index = 0;
 $mpp = 4;

@@ -53,7 +53,6 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                      <a href="inscription.php">Inscription</a>
                       <?php
                         if($connecte == true){
                           ?>
@@ -61,6 +60,7 @@
                           <?php
                         }else {
                           ?>
+                          <a href="inscription.php">Inscription</a>
                           <a href="connexion.php">Connexion</a>
                           <?php
                         }
