@@ -16,6 +16,7 @@
 
     <!-- Theme CSS -->
     <link href="css/freelancer.css" rel="stylesheet">
+    <!--Add new personal stylesheet-->
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Custom Fonts -->

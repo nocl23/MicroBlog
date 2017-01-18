@@ -1,7 +1,9 @@
+/* Le message indiquant une erreur dans le remplissage des champs est caché par défaut */
 .message_alert{
   visibility: hidden;
 }
 
+/* Permet d'afficher les textes d'inscription et de connexions à cote au lieu de l'un en dessous de l'autre*/
 .page-scroll a {
   display: inline !important;
 }

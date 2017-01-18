@@ -1,6 +1,8 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname=dbname', '', '', $arrExtraParam);
+$pdo = new PDO('mysql:host=localhost;dbname= ', ' ', ' ', $arrExtraParam);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+//permet de savoir si un utilisateur est connecté
 
 $connecte = false;
 

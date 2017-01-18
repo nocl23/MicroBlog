@@ -4,7 +4,7 @@ include('includes/haut.inc.php');
 
 $message= "";
 $id ="";
-// affichage Modification d'un message
+// affichage d'un message a modifier
 if(isset($_GET['id']) && !empty($_GET['id'])){
 
   $id = $_GET['id'];
@@ -16,7 +16,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
       header("Location: index.php");
     }
 }
-
+// Seules les personnes connectées peuvent ajouter un message
 if($connecte){
 ?>
 <div class="row">
@@ -37,6 +37,7 @@ if($connecte){
 </div>
 <?php
 }
+
 // Pagination
 $index = 0;
 $mpp = 4;
@@ -45,14 +46,14 @@ if(isset($_GET['p']) && !empty($_GET['p'])){
   $page = $_GET['p'];
   $index = ($page - 1)* $mpp;
 }
-//$query = 'SELECT * FROM messages LIMIT '.$index.','.$mpp.'';
-
-//$query = 'SELECT * FROM messages';
+// Affichage de 4 messages par page
 $query = 'SELECT * , messages.id as message_id FROM messages INNER JOIN users ON messages.user_id = users.id LIMIT '.$index.','.$mpp.'';
 $stmt = $pdo->prepare($query);
 $stmt->execute();
+
+// Affichage des boutons modifications et suppressions si l'utilisateur est connecté
 while ($data = $stmt->fetch()) {
-  if($connecte == true){
+  if($connecte){
   	?>
   	<blockquote>
   		<?= $data['contenu'] ?>
@@ -64,50 +65,47 @@ while ($data = $stmt->fetch()) {
       </div>
       <div class="col-sm-12">
           <?= "Ajouté le ".$data['date'] ?>
-        </div>
-        <div class="col-sm-12">
-            <?= "Ajouté par ".$data['pseudo'] ?>
-          </div>
+      </div>
+      <div class="col-sm-12">
+          <?= "Ajouté par ".$data['pseudo'] ?>
+      </div>
   	</blockquote>
     <?php
   }else{
     ?>
     <blockquote>
       <?= $data['contenu'] ?>
-      <div class="col-sm-2">
-          <?php echo "<a href='index.php?id=" .$data['message_id']. "'></a>" ?>
-      </div>
-      <div class="col-sm-2">
-          <?php echo "<a href='suppression.php?id=" .$data['message_id']. "'></a>" ?>
-      </div>
       <div class="col-sm-12">
           <?= "Ajouté le ".$data['date'] ?>
-        </div>
-        <div class="col-sm-12">
-            <?= "Ajouté par ".$data['pseudo'] ?>
-          </div>
+      </div>
+      <div class="col-sm-12">
+          <?= "Ajouté par ".$data['pseudo'] ?>
+      </div>
     </blockquote>
     <?php
   }
 }
-?>
-<?php
+
+// Calcul du nombre total de message pour déterminer le nombre de page pour l'affichage des messages
 $requete = 'SELECT COUNT(*) as total_messages FROM messages';
 $prep = $pdo->query($requete);
 $data = $prep->fetch();
 $nombre_message = $data['total_messages'];
 $nb_pages = ($nombre_message) ? ceil($nombre_message/$mpp) : 1;
-if ($page > 1){
-  $previous = $page - 1;
-}else{
-  $previous = 1;
-}
-if($page < $nb_pages){
-  $next = $page + 1;
-}else{
-  $next = $page;
-}
+
+// Pagination avec les flêches
+  if ($page > 1){
+    $previous = $page - 1;
+  }else{
+    $previous = 1;
+  }
+  if($page < $nb_pages){
+    $next = $page + 1;
+  }else{
+    $next = $page;
+  }
 ?>
+<!--Système de pagination Bootstrap-->
 <nav aria-label="Page navigation">
   <ul class="pagination">
     <li>
