@@ -53,6 +53,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
+                      <a href="inscription.php">Inscription</a>
                       <?php
                         if($connecte == true){
                           ?>

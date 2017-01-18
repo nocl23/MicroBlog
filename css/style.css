@@ -1,3 +1,7 @@
 .message_alert{
   visibility: hidden;
 }
+
+.page-scroll a {
+  display: inline !important;
+}
