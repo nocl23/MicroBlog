@@ -20,26 +20,41 @@ if(isset($_POST['pseudo'])){
       $prepare->execute();
       header("Location: index.php");
     }
-    else
-    {
-        header("Location: connexion.php");
-    }
-
 }
-?>
 
-<form method="post" action="connexion.php">
+?>
+<div class="alert alert-danger message_alert">
+  <strong>Attention!</strong> Veuillez compléter les deux champs pour vous connecter!
+</div>
+<form method="post" action="connexion.php" id="form">
   <div class="row">
     <div class="form-group col-sm-2">
       <label for="exampleInputPassword1">Pseudo</label>
-      <input type="pseudo" name="pseudo" class="form-control" id="exampleInputPseudo" placeholder="Pseudo">
+      <input type="pseudo" name="pseudo" class="form-control" id="InputPseudo" placeholder="Pseudo">
     </div>
+
   </div>
 <div class="row">
   <div class="form-group col-sm-2">
     <label for="exampleInputPassword1">Password</label>
-    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Password">
   </div>
 </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
+
+    <script type="text/javascript">
+    // Script qui vérifie si les deux champs de connexions sont complétés
+    var value = true;
+      $(function(){
+        $('#form').submit(function(){
+          if(!($('#InputPseudo').val()) || !($('#InputPassword').val())){
+            $('.message_alert').removeClass("message_alert");
+            value = false;
+          }else{
+            value = true;
+          }
+        return value;
+        })
+      });
+    </script>
