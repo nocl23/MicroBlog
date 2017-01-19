@@ -55,32 +55,34 @@ $stmt->execute();
 while ($data = $stmt->fetch()) {
   if($connecte){
   	?>
-  	<blockquote>
-  		<?= $data['contenu'] ?>
-      <div class="col-sm-2">
-          <?php echo "<a href='index.php?id=" .$data['message_id']."&p=".$page."'><button type='button' class='btn btn-warning'>Modifier</button></a>" ?>
+  	<blockquote class="col-md-12">
+      <div class="col-md-8">
+        <div>
+          <?= $data['contenu'] ?>
+        </div>
+        <footer>
+            <?= "Ajouté par ".$data['pseudo']. " le " .$data['date'] ?>
+        </footer>
       </div>
-      <div class="col-sm-2">
-          <?php echo "<a href='suppression.php?id=" .$data['message_id']."&p=".$page."'><button type='button' class='btn btn-danger'>Supprimer</button></a>" ?>
-      </div>
-      <div class="col-sm-12">
-          <?= "Ajouté le ".$data['date'] ?>
-      </div>
-      <div class="col-sm-12">
-          <?= "Ajouté par ".$data['pseudo'] ?>
+      <div class="col-md-4">
+        <div class="col-md-6">
+            <?php echo "<a href='index.php?id=" .$data['message_id']."&p=".$page."'><button type='button' class='btn btn-warning'>Modifier</button></a>" ?>
+        </div>
+        <div class="col-md-6">
+            <?php echo "<a href='suppression.php?id=" .$data['message_id']."&p=".$page."'><button type='button' class='btn btn-danger'>Supprimer</button></a>" ?>
+        </div>
       </div>
   	</blockquote>
     <?php
   }else{
     ?>
     <blockquote>
-      <?= $data['contenu'] ?>
-      <div class="col-sm-12">
-          <?= "Ajouté le ".$data['date'] ?>
+      <div>
+        <?= $data['contenu'] ?>
       </div>
-      <div class="col-sm-12">
-          <?= "Ajouté par ".$data['pseudo'] ?>
-      </div>
+      <footer>
+          <?= "Ajouté par ".$data['pseudo']. " le " .$data['date'] ?>
+      </footer>
     </blockquote>
     <?php
   }

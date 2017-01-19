@@ -53,7 +53,7 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll col-md-offset-4">
+                    <li class="page-scroll col-md-offset-6 col-md-2">
                       <?php
                         if($connecte == true){
                           ?>
