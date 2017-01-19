@@ -47,7 +47,7 @@ if(isset($_GET['p']) && !empty($_GET['p'])){
   $index = ($page - 1)* $mpp;
 }
 // Affichage de 4 messages par page
-$query = 'SELECT * , messages.id as message_id FROM messages INNER JOIN users ON messages.user_id = users.id LIMIT '.$index.','.$mpp.'';
+$query = 'SELECT * , messages.id as message_id FROM messages INNER JOIN users ON messages.user_id = users.id ORDER BY messages.date DESC LIMIT '.$index.','.$mpp.'';
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 
@@ -108,6 +108,7 @@ $nb_pages = ($nombre_message) ? ceil($nombre_message/$mpp) : 1;
   }
 ?>
 <!--Système de pagination Bootstrap-->
+<div class="row col-md-offset-4 col-md-4">
 <nav aria-label="Page navigation">
   <ul class="pagination">
     <li>
@@ -129,5 +130,6 @@ $nb_pages = ($nombre_message) ? ceil($nombre_message/$mpp) : 1;
     </li>
   </ul>
 </nav>
+</div>
 
  <?php include('includes/bas.inc.php'); ?>
