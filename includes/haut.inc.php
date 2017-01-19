@@ -49,11 +49,11 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right col-md-offset-2 col-md-10">
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="page-scroll col-md-offset-4">
                       <?php
                         if($connecte == true){
                           ?>
@@ -66,6 +66,19 @@
                           <?php
                         }
                        ?>
+                     </li>
+
+                     <li class="col-md-4">
+                       <form class="form-group" method="post" action="recherche.php" id="recherche">
+                           <div class="input-group input-group-md icon-addon addon-md">
+                             <input type="text" placeholder="Texte" name="search" id="search" class="form-control">
+                             <i class="icon icon-search"></i>
+                             <span class="input-group-btn">
+                               <button type="submit" class="btn btn-inverse">Rechercher</button>
+                             </span>
+                           </div>
+                       </form>
+                     </li>
 
                 </ul>
             </div>
