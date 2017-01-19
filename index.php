@@ -6,15 +6,14 @@ $message= "";
 $id ="";
 // affichage d'un message a modifier
 if(isset($_GET['id']) && !empty($_GET['id'])){
-
   $id = $_GET['id'];
-    $sql = 'SELECT * from messages where id='.$id.'';
-    $requete = $pdo->query($sql);
-    if ($data = $requete->fetch()) {
-      $message =  $data['contenu'];
-    }else{
-      header("Location: index.php");
-    }
+  $sql = 'SELECT * from messages where id='.$id.'';
+  $requete = $pdo->query($sql);
+  if ($data = $requete->fetch()) {
+    $message =  $data['contenu'];
+  }else{
+    header("Location: index.php");
+  }
 }
 // Seules les personnes connectées peuvent ajouter un message
 if($connecte){
@@ -25,7 +24,6 @@ if($connecte){
             <div class="form-group">
                 <textarea id="message" name="message" class="form-control" placeholder="Message">
                   <?php echo $message?>
-
                 </textarea>
                 <input type="hidden" name="id" value="<?php echo $id ?>"/>
             </div>
@@ -106,30 +104,34 @@ $nb_pages = ($nombre_message) ? ceil($nombre_message/$mpp) : 1;
   }else{
     $next = $page;
   }
-?>
+
+  if($nombre_message > $mpp){ ?>
 <!--Système de pagination Bootstrap-->
-<div class="row col-md-offset-4 col-md-4">
-<nav aria-label="Page navigation">
-  <ul class="pagination">
-    <li>
-      <a <?php echo "href='index.php?p=$previous'" ?> aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <?php for ($i=1; $i < $nb_pages+1; $i++) {
-      ?>
-    <li>  <?php echo "<a href='index.php?p=$i'>$i</a>" ?></li>
+    <div class="row col-md-offset-4 col-md-4">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li>
+            <a <?php echo "href='index.php?p=$previous'" ?> aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <?php
+          for ($i=1; $i < $nb_pages+1; $i++) { ?>
+          <li>
+             <?php echo "<a href='index.php?p=$i'>$i</a>" ?>
+          </li>
+          <?php
+          }
+          ?>
+          <li>
+            <a <?php echo "href='index.php?p=$next'" ?> aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <?php
-    }
-     ?>
+  }
 
-    <li>
-      <a <?php echo "href='index.php?p=$next'" ?> aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-</div>
-
- <?php include('includes/bas.inc.php'); ?>
+  include('includes/bas.inc.php'); ?>
