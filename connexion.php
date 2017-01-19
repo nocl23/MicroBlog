@@ -12,14 +12,14 @@ if(isset($_POST['pseudo'])){
     $prep->execute();
 
 // Si les données sont récupérées, connexion est un succès, création du cookie de connexion et mise à jour du cookie en BDD
-    if ($prep->fetch())
-    {
+    if ($prep->fetch()){
       $connecte=true;
       $sid = $pseudo.time();
       setcookie('sid',$sid,time() + 365);
       $update = "UPDATE users SET sid='$sid' where pseudo='$pseudo'";
       $prepare = $pdo->prepare($update);
       $prepare->execute();
+      
       header("Location: index.php");
     }
 }

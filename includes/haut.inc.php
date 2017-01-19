@@ -79,7 +79,6 @@
                            </div>
                        </form>
                      </li>
-
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
