@@ -1,8 +1,9 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname= ', ' ', ' ', $arrExtraParam);
+$pdo = new PDO('mysql:host=localhost;dbname=micro_blog', 'root', 'root', $arrExtraParam);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-//permet de savoir si un utilisateur est connecté
+require('./libs/Smarty.class.php');
+$smarty = new Smarty();
 
 $connecte = false;
 
@@ -16,3 +17,5 @@ if(isset($_COOKIE['sid'])){
     $connecte = true;
   }
 }
+
+$smarty->assign('connecte',$connecte);

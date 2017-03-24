@@ -54,22 +54,20 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll col-md-offset-6 col-md-2">
-                      <?php
-                        if($connecte == true){
-                          ?>
+
+                        {if $connecte}
+
                           <a href="deconnexion.php">Déconnexion</a>
-                          <?php
-                        }else {
-                          ?>
+
+                      {else}
                           <a href="inscription.php">Inscription</a>
                           <a href="connexion.php">Connexion</a>
-                          <?php
-                        }
-                       ?>
+
+                      {/if}
                      </li>
 
                      <li class="col-md-4">
-                       <form class="form-group" method="post" action="recherche.php" id="recherche">
+                       <form class="form-group" method="get" action="index.php" id="recherche">
                            <div class="input-group input-group-md icon-addon addon-md">
                              <input type="text" placeholder="Texte" name="search" id="search" class="form-control">
                              <i class="icon icon-search"></i>

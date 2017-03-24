@@ -1,0 +1,72 @@
+{include file='includes/connexion.inc.php'}
+{include file='includes/haut.inc.html'}
+
+{if $connecte}
+{foreach $message as $msg}
+<div class="row">
+    <form method="post" action="message.php">
+        <div class="col-sm-10">
+            <div class="form-group">
+                <textarea id="message" name="message" class="form-control" placeholder="Message">
+                  {$msg}
+                </textarea>
+                <input type="hidden" name="id" value="{$id}"/>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-success btn-lg">Envoyer</button>
+        </div>
+    </form>
+</div>
+{/foreach}
+{/if}
+
+{foreach $res as $mess}
+  	<blockquote class="col-md-12">
+      <div class="col-md-8">
+        <div>
+          {$mess.contenu}
+        </div>
+        <footer>
+            Ajouté par "{$mess.pseudo}" le {$mess.date}
+        </footer>
+      </div>
+      {if $connecte}
+      <div class="col-md-4">
+        <div class="col-md-6">
+            <a href='index.php?id={$mess.message_id}&p={$page}'><button type='button' class='btn btn-warning'>Modifier</button></a>
+        </div>
+        <div class="col-md-6">
+            <a href='suppression.php?id={$mess.message_id}&p={$page}'><button type='button' class='btn btn-danger'>Supprimer</button></a>
+        </div>
+      </div>
+      {/if}
+  	</blockquote>
+{/foreach}
+
+{if $nombre_message > $mpp && $search == false}
+
+  <div class="row col-md-offset-4 col-md-4">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+          <a href='index.php?p={$previous}' aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+          {for $i=1 to $nb_pages}
+        <li>
+           <a href='index.php?p={$i}'>{$i}</a>
+        </li>
+        {/for}
+        <li>
+          <a href='index.php?p={$next}' aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+{/if}
+
+{include file='includes/bas.inc.php'}
