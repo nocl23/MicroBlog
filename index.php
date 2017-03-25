@@ -46,15 +46,12 @@ $mess = array();
 $res = array();
 
 foreach ($stmt as $msg) {
-  if(preg_match_all("/#(\w+)$/",$msg["contenu"],$matches,PREG_SET_ORDER)){
-    foreach ($matches as $value) {
-      $hashtag = "<a href='?recherche=".$value[1]."'>".$value[0]."</a>";
-      //$mess['contenu'] = preg_replace("/".$value[0]."/", $hashtag, $msg['contenu']);
-      $msg["contenu"] = "pulpe";
+  if(preg_match_all("/#(\w+)$/",$msg["contenu"],$hashtag,PREG_SET_ORDER)){
+    foreach ($hashtag as $value) {
+      $link = "<a href='?search=".$value[1]."'>".$value[0]."</a>";
+      $msg['contenu'] = preg_replace("/".$value[0]."/", $link, $msg['contenu']);
     }
   }
-
-  //preg_replace($msg["contenu"],"",$msg["contenu"]);
 
   $mess["contenu"] = $msg["contenu"];
   $mess["date"] = $msg["date"];
