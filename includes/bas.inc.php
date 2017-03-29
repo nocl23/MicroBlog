@@ -14,7 +14,7 @@
                             <br>Beverly Hills, CA 90210</p>
                     </div>
                     <div class="footer-col col-md-4">
-                        
+
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>A propos</h3>
@@ -26,8 +26,13 @@
         <div class="footer-below">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                         Copyright &copy; Your Website 2016
+                    </div>
+                    <div class="col-lg-4">
+                        <a class="icone facebook" href="http://www.facebook.com"></a>
+                        <a class="icone twitter" href="http://www.twitter.com"></a>
+                        <a class="icone youtube" href="http://www.youtube.com"></a>
                     </div>
                 </div>
             </div>
