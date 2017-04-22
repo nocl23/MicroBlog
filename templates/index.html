@@ -36,7 +36,7 @@
         </footer>
       </div>
       <div class="col-md-2">
-        <button type="button" name="vote" class="btn btn-primary">Like</button>
+        <button type="button" id="like" name="vote" class="btn btn-primary">Like</button>
           {{$mess.votes}} like
       </div>
       {if $connecte}
@@ -80,7 +80,6 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function(){
-
   $('#message').keydown(function(){
     var message = $('#message').val();
 
@@ -93,6 +92,11 @@ $(document).ready(function(){
       }
     });
   });
+
+  $(document).on("click","#like",function(){
+    console.log("like");
+  });
+
 });
 
 {/literal}
