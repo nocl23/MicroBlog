@@ -44,12 +44,12 @@ if(isset($_GET['search']) && !empty($_GET['search'])){
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 
-$mess = array();
 $res = array();
 
-//hastags
 
 foreach ($stmt as $msg) {
+
+  //hastags
   if(preg_match_all("/#(\w+)$/",$msg["contenu"],$hashtag,PREG_SET_ORDER)){
     foreach ($hashtag as $value) {
       $link = "<a href='?search=".$value[1]."'>".$value[0]."</a>";
@@ -57,25 +57,31 @@ foreach ($stmt as $msg) {
     }
   }
 
-// site web
+  // site web
+  /*  if(preg_match_all("/(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ;,.\/?%&=]*)?/",$msg["contenu"],$website,PREG_SET_ORDER)){
+      foreach ($website as $value) {
+        $link = "<a href='".$value[0]."'>".$value[0]."</a>";
+        $msg["contenu"] = preg_replace("'".$value[0]."'",$link,$msg["contenu"]);
+      }
+    }*/
 
-  if(preg_match_all("/(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ;,.\/?%&=]*)?/",$msg["contenu"],$website,PREG_SET_ORDER)){
-    foreach ($website as $value) {
-      $link = "<a href='".$value[0]."'>".$value[0]."</a>";
-      $msg["contenu"] = preg_replace("'".$value[0]."'",$link,$msg["contenu"]);
+    //mail
+    if(preg_match_all("/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/",$msg["contenu"],$email,PREG_SET_ORDER)){
+      foreach ($email as $value) {
+        $link = "<a href='mailto:".$value[0]."'>".$value[0]."</a>";
+        $msg["contenu"] = preg_replace("/".$value[0]."/",$link,$msg["contenu"]);
+      }
     }
-  }
 
 
-
-
-
-  $mess["contenu"] = $msg["contenu"];
-  $mess["date"] = $msg["date"];
-  $mess["user_id"] = $msg["user_id"];
-  $mess["pseudo"] = $msg["pseudo"];
-  $mess["message_id"] = $msg["message_id"];
-  $mess["votes"] = $msg["votes"];
+  $mess = array(
+    "contenu" => $msg["contenu"],
+    "date" => $msg["date"],
+    "user_id" => $msg["user_id"],
+    "pseudo" => $msg["pseudo"],
+    "message_id" => $msg["message_id"],
+    "votes" => $msg["votes"]
+  );
 
   array_push($res,$mess);
 }

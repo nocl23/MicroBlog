@@ -20,7 +20,11 @@
 </div>
 {/foreach}
 {/if}
-
+<div>
+  Message :
+  <p id="previsualisation">
+   </p>
+</div>
 {foreach $res as $mess}
   	<blockquote class="col-md-12">
       <div class="col-md-6">
@@ -72,5 +76,26 @@
     </nav>
   </div>
 {/if}
+
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+
+  $('#message').keydown(function(){
+    var message = $('#message').val();
+
+    $.ajax({
+       url : '../MicroBlog/apercu.php',
+       type: 'POST',
+       data: {message: message},
+       success: function(data){
+        $("#previsualisation").text(data);
+      }
+    });
+  });
+});
+
+{/literal}
+</script>
 
 {include file='includes/bas.inc.php'}
