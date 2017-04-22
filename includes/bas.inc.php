@@ -32,7 +32,6 @@
                     <div class="col-lg-4">
                         <a class="icone facebook" href="http://www.facebook.com"></a>
                         <a class="icone twitter" href="http://www.twitter.com"></a>
-                        <a class="icone youtube" href="http://www.youtube.com"></a>
                     </div>
                 </div>
             </div>

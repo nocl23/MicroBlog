@@ -19,6 +19,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
   }
 }
 
+//Pagination
 $index = 0;
 $mpp = 4;
 $page = 1;
@@ -28,6 +29,7 @@ if(isset($_GET['p']) && !empty($_GET['p'])){
   $index = ($page - 1)* $mpp;
 }
 
+// Recherche des messages contenant le mot
 if(isset($_GET['search']) && !empty($_GET['search'])){
   $search_bool = true;
   $recherche = $_GET['search'];
@@ -45,21 +47,37 @@ $stmt->execute();
 $mess = array();
 $res = array();
 
+//hastags
+
 foreach ($stmt as $msg) {
   if(preg_match_all("/#(\w+)$/",$msg["contenu"],$hashtag,PREG_SET_ORDER)){
     foreach ($hashtag as $value) {
       $link = "<a href='?search=".$value[1]."'>".$value[0]."</a>";
-      $msg['contenu'] = preg_replace("/".$value[0]."/", $link, $msg['contenu']);
+      $msg["contenu"] = preg_replace("/".$value[0]."/", $link, $msg["contenu"]);
     }
   }
+
+// site web
+
+  if(preg_match_all("/(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ;,.\/?%&=]*)?/",$msg["contenu"],$website,PREG_SET_ORDER)){
+    foreach ($website as $value) {
+      $link = "<a href='".$value[0]."'>".$value[0]."</a>";
+      $msg["contenu"] = preg_replace("'".$value[0]."'",$link,$msg["contenu"]);
+    }
+  }
+
+
+
+
 
   $mess["contenu"] = $msg["contenu"];
   $mess["date"] = $msg["date"];
   $mess["user_id"] = $msg["user_id"];
   $mess["pseudo"] = $msg["pseudo"];
   $mess["message_id"] = $msg["message_id"];
+  $mess["votes"] = $msg["votes"];
 
-  $res[] = $mess;
+  array_push($res,$mess);
 }
 
 $requete = 'SELECT COUNT(*) as total_messages FROM messages';
